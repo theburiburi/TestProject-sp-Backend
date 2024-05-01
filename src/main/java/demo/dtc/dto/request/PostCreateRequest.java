@@ -1,5 +1,8 @@
-package demo.dtc.dto.cuj.request;
+package demo.dtc.dto.request;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 public class PostCreateRequest {
     private String title;
     private String content;

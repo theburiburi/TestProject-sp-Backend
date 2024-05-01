@@ -1,8 +1,13 @@
-package demo.dtc.domain.cuj;
+package demo.dtc.domain;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,7 +16,9 @@ public class Post {
     private String title;
     @Column(nullable = false)
     private String content;
-    public Post(){}
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
 
     public Post(String title, String content) {
         this.title = title;
@@ -28,5 +35,13 @@ public class Post {
 
     public String getContent() {
         return content;
+    }
+
+    public List<Comment> getComment() {
+        return comments;
+    }
+
+    public void saveComment(String content) {
+        comments.add(new Comment(content, this));
     }
 }
